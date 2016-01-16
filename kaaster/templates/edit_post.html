@@ -3,7 +3,7 @@
 {% block content %}
   <h3>Edit Post</h3>
   <p class="error">{{ message }}</p>
-  <form method="post">
+  <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Edit</button>
