@@ -1,6 +1,12 @@
+{% load compress %}
+{% load staticfiles %}
+
 <html>
   <head>
     <title>Kaaster</title>
+    {% compress css %}
+    <link href="{% static "style.less"%}" media="all" rel="stylesheet" type="text/less"/>
+    {% endcompress %}
   </head>
   <body>
     <h1>Welcome to Kaster</h1>
@@ -17,3 +23,8 @@
     </footer>
   </body>
 </html>
+
+
+
+
+  
