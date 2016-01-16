@@ -9,10 +9,10 @@
   {% else %}
     <div class="ka-posts-list">
       {% for post in posts %}
-        <a href="{% url 'detail_post' post.pk %}">
+        
           <div class="post">
             <div class="author">
-              <div class="avatar"></div>
+              <div class="avatar" style="background-image: url({{ profile.avatar.url }})"></div>
             </div>
 
             <div class="content">
@@ -28,10 +28,10 @@
             </div>
 
             <div class="details">
-              <p class="date">{{ post.date_added }}</p>
+              <a href="{% url 'detail_post' post.pk %}"><p class="date">{{ post.date_added }}</p></a>
             </div>
           </div>
-        </a>
+        
       {% endfor %}
     </div>
     {% endif %}
