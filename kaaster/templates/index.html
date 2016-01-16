@@ -12,18 +12,20 @@
 
       <h2> Check the lastest Kaas </h2>
 
-      {% for post in posts %}
-        <div>
-            <p> 
-                <b> {{ post.author }} </b>
-                <br>
-                <b> {{ post.date_added }} </b>
-            </p>
-            <p>
-                {{ post.message }}
-            </p>
-        </div>
-      {% endfor %}
+    {% for post in posts %}
+      <div>
+          <p> 
+              <b> {{ post.author }} </b>
+              <br>
+              <b> {{ post.date_added }} </b>
+          </p>
+          <p>
+              {{ post.message }}
+              <br>
+              <!-- <a href="{% url 'detail_post' %}">Replies</a> -->
+          </p>
+      </div>
+    {% endfor %}
 
       <h3>You are not logged in!</h3>
     {% endif %}
