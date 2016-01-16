@@ -21,9 +21,7 @@
 
         <a href="{% url 'index' %}" class="just-icon"><i class="fa fa-home"></i></a>
 
-        {% if user.is_authenticated %}
-          <a href="#" class="just-icon"><i class="fa fa-users"></i></a>
-        {% endif %}
+
 
         <form method="get" action="{% url 'search_tags' %}">
           <input name="tags" type="text" placeholder="Search for hashtag in posts" />
