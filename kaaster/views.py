@@ -185,24 +185,24 @@ class EditPostView(LoginRequiredMixin, UpdateView):
 class DetailPostView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detail_post.html'
-    formPentruReply = CreatePostReplyForm
+    formForReply = CreatePostReplyForm
 
     def get_context_data(self, **args):
         context = super(DetailPostView, self).get_context_data(**args)
-        context['replyForm'] = self.formPentruReply()
+        context['replyForm'] = self.formForReply()
         context['replies'] = self.model.replies
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = self.formPentruReply(request.POST)
-        if form.is_valid():
-            message = form.cleaned_data['message']
-            user_reply = Reply(message=message, author=request.user, post=self.get_object())
-            user_reply.save()
+def post(self, request, *args, **kwargs):
+    form = self.formForReply(request.POST)
+    if form.is_valid():
+        message = form.cleaned_data['message']
+        user_reply = Reply(message=message, author=request.user, post=self.get_object())
+        user_reply.save()
             
-        return redirect('detail_post', pk=self.get_object().pk)
+    return redirect('detail_post', pk=self.get_object().pk)
 
-def search(request):
+def search_tags(request):
     tagName = request.GET.get('tags', None)
     tag = Tag.objects.filter(name=tagName).first()
     posts = []
@@ -211,4 +211,15 @@ def search(request):
         for tagInPost in all_tags:
             posts.append(tagInPost.post)
     context = {'posts': posts}
-    return render(request, 'search.html', context)
+    return render(request, 'search_tags.html', context)
+
+
+def search_users(request):
+    username = request.GET.get('users', None)
+    users = User.objects.filter(username__contains=username)
+    context = {'users': users}
+    return render(request, 'search_users.html', context)
+
+
+
+
