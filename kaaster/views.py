@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+import re
 
 # Kaaster Models
 from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
@@ -24,6 +25,8 @@ class LoginRequiredMixin(object):
         view = super(LoginRequiredMixin, cls).as_view(**kwargs)
         return login_required(view)
 
+# def getProfile(post):
+
 def index(request):
     context = {"user": ""}
     print(request.user)
@@ -34,6 +37,7 @@ def index(request):
 
         if request.method == 'GET':
             posts = Post.objects.all()
+            # map(getProfile, posts)
             print 'Posts received'
             print posts
             context = {
@@ -152,6 +156,17 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
+        post = Post.objects.get(pk=self.object.id)
+        tags = re.findall(r'#\w+', post.message)
+        for tagNameUnformated in tags:
+            tagName = tagNameUnformated.replace('#', '')
+            tag = Tag.objects.filter(name=tagName).first()
+            if not tag:
+                tag = Tag.objects.create(name=tagName)
+                tag.save()
+            
+            tagsinpost = TagsInPosts.objects.create(tag=tag, post=post)
+            tagsinpost.save()
         return reverse('index')
 
 class EditPostView(LoginRequiredMixin, UpdateView):
@@ -183,3 +198,13 @@ class DetailPostView(LoginRequiredMixin, DetailView):
             
         return redirect('detail_post', pk=self.get_object().pk)
 
+def search(request):
+    tagName = request.GET.get('tags', None)
+    tag = Tag.objects.filter(name=tagName).first()
+    posts = []
+    if(tag):
+        all_tags = TagsInPosts.objects.filter(tag=tag)
+        for tagInPost in all_tags:
+            posts.append(tagInPost.post)
+    context = {'posts': posts}
+    return render(request, 'search.html', context)

@@ -1,18 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
-  
   {% if not user.is_authenticated %}
     <div class="welcome">
-      <h2>Welcome to <em>Kaaster</em></h2>
-      <h3>A place where you can keep in touch with all your friends.</h3>
+      <h2>You are not logged in</h2>
+      <h3>You cannot search tags if you're not logged in.</h3>
     </div>
   {% else %}
     <div class="ka-posts-list">
       {% for post in posts %}
-        
+        <a href="{% url 'detail_post' post.pk %}">
           <div class="post">
             <div class="author">
-              <div class="avatar" style="background-image: url({{ profile.avatar.url }})"></div>
+              <div class="avatar"></div>
             </div>
 
             <div class="content">
@@ -28,10 +27,10 @@
             </div>
 
             <div class="details">
-              <a href="{% url 'detail_post' post.pk %}"><p class="date">{{ post.date_added }}</p></a>
+              <p class="date">{{ post.date_added }}</p>
             </div>
           </div>
-        
+        </a>
       {% endfor %}
     </div>
     {% endif %}
