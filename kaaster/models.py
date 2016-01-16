@@ -6,7 +6,8 @@ from django.conf import settings
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
+        related_name='profile'
         )
     first_name = models.TextField(max_length=500)
     last_name = models.TextField(max_length=500)
@@ -18,3 +19,21 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return u'{} @ {}'.format(self.first_name, self.last_name)
+
+
+class Reply(models.Model):
+    message = models.TextField(max_length=500)
+    date_added = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User)
+    post = models.ForeignKey(Post, related_name='replies',)
+
+    class Meta:
+        ordering = ['date_added']
+
+    def __unicode__(self):
+        return u'{} @ {}'.format(self.author, self.date_added)
+
+
+class TagsInReplies(models.Model):
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE,)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
