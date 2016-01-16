@@ -81,6 +81,15 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
         return reverse('index')
 
+class EditPostView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['message', 'media']
+    template_name = 'edit_post.html'
+
+    def get_success_url(self):
+        # return reverse('index', kwargs={'pk': self.get_object().post.pk})
+        return reverse('index')
+
 
 
 
