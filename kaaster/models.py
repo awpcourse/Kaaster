@@ -21,7 +21,8 @@ class Post(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
+        related_name='profile'
         )
     first_name = models.TextField(max_length=500)
     last_name = models.TextField(max_length=500)
@@ -52,4 +53,21 @@ class TagsIntPosts(models.Model):
 		on_delete = models.CASCADE,
 		)
 
+
+class Reply(models.Model):
+    message = models.TextField(max_length=500)
+    date_added = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User)
+    post = models.ForeignKey(Post, related_name='replies',)
+
+    class Meta:
+        ordering = ['date_added']
+
+    def __unicode__(self):
+        return u'{} @ {}'.format(self.author, self.date_added)
+
+
+class TagsInReplies(models.Model):
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE,)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
