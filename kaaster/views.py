@@ -22,7 +22,7 @@ class LoginRequiredMixin(object):
         return login_required(view)
 
 def index(request):
-    context = {"user": "", "loggedin": False}
+    context = {"user": ""}
     print(request.user)
     if(request.user.is_authenticated()):
         print "Logged In"
@@ -31,13 +31,11 @@ def index(request):
 
         if request.method == 'GET':
             posts = Post.objects.all()
-            form = UserPostForm()
+            print 'am luat un cacat'
+            print posts
             context = {
-                'posts': posts,
-                'form': form,
+                'posts': posts
             }
-            return render(request, 'index.html', context)
-
     else:
         print "Not logged in!"
     return render(request, 'index.html', context)
@@ -82,5 +80,8 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
         return reverse('index')
+
+
+
 
 
