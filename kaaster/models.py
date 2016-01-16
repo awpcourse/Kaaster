@@ -4,10 +4,10 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 
 class Post(models.Model):
-
 	author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete = models.CASCADE,
+        related_name = 'posts',
         )
 
 	date_added = models.DateTimeField(auto_now_add=True)
@@ -31,6 +31,25 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to='images/avatars/',
         default='images/avatars/no_avatar.jpg')
 
+    class Meta:
+        ordering = ['date_added']
+
     def __unicode__(self):
         return u'{} @ {}'.format(self.first_name, self.last_name)
+
+class Tag(models.Model):
+	name = models.TextField(max_length=50)
+	popularity = models.IntegerField()
+
+class TagsIntPosts(models.Model):
+	tag = models.ForeignKey(
+		Post,
+		on_delete = models.CASCADE,
+		)
+
+	post = models.ForeignKey(
+		Tag,
+		on_delete = models.CASCADE,
+		)
+
 
