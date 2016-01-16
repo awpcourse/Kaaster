@@ -17,6 +17,7 @@
           <a href="{% url 'profile' %}">Profile</a>
           <a href="{% url 'logout' %}">Kaa out</a>
         {% else %}
+          <a href="{% url 'register' %}">Be a Kaa</a>
           <a href="{% url 'login' %}">Kaa In</a>
         {% endif %}
       </nav>

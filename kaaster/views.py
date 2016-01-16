@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # Kaaster Models
 from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
@@ -12,7 +14,7 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 
 # Forms
-from kaaster.forms import UserLoginForm, CreatePostForm, UserPostForm
+from kaaster.forms import UserLoginForm, CreatePostForm, UserPostForm, UserRegisterForm
 
 # Mixins
 class LoginRequiredMixin(object):
@@ -40,6 +42,7 @@ def index(request):
         print "Not logged in!"
     return render(request, 'index.html', context)
 
+
 def loginview(request):
     if request.method == 'GET':
         form = UserLoginForm()
@@ -61,9 +64,27 @@ def loginview(request):
             login(request, user)
             return redirect('index')
 
+
 def logoutview(request):
     logout(request)
     return redirect('login')
+
+def register(request):
+    if request.method == 'GET':
+        form = UserRegisterForm()
+        context = {'form': form}
+        return render(request, 'register.html', context)
+    elif request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            User.objects.create(username=username, password=password, email=email)
+            return redirect('index')
+        else:
+            context = {'form': form}
+            return render(request, 'register.html', context)
 
 
 # Post Views
