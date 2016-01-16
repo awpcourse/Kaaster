@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block content %}
+  {% if not user.is_authenticated %}
+    <div class="welcome">
+      <h2>You are not logged in</h2>
+      <h3>You cannot search tags if you're not logged in.</h3>
+    </div>
+  {% else %}
+    <div class="ka-posts-list">
+      {% for post in posts %}
+        <a href="{% url 'detail_post' post.pk %}">
+          <div class="post">
+            <div class="author">
+              <div class="avatar"></div>
+            </div>
+
+            <div class="content">
+              <div class="userplate">
+                <span class="name">
+                  {{ post.author.profile.first_name }} {{ post.author.profile.last_name }}
+                </span>
+                <span class="username">
+                  <a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a>
+                </span>
+              </div>
+              {{ post.message }}
+            </div>
+
+            <div class="details">
+              <p class="date">{{ post.date_added }}</p>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

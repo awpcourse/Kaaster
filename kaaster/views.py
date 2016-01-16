@@ -198,3 +198,13 @@ class DetailPostView(LoginRequiredMixin, DetailView):
             
         return redirect('detail_post', pk=self.get_object().pk)
 
+def search(request):
+    tagName = request.GET.get('tags', None)
+    tag = Tag.objects.filter(name=tagName).first()
+    posts = []
+    if(tag):
+        all_tags = TagsInPosts.objects.filter(tag=tag)
+        for tagInPost in all_tags:
+            posts.append(tagInPost.post)
+    context = {'posts': posts}
+    return render(request, 'search.html', context)
