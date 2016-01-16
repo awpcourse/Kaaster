@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 
 # Kaaster Models
-from kaaster.models import Post, Tag, TagsInPost, Reply, TagsInReplies, UserProfile
+from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
 
 # Class-Based Views
 from django.views.generic.list import ListView
