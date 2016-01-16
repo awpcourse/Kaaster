@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^profile/edit/(?P<username>[A-Za-z0-9]+)/$', views.edit_profile, name='edit_profile'),
     url(r'^post/(?P<pk>\d+)/$', views.DetailPostView.as_view(), name='detail_post'),
     url(r'^register/$', views.register, name='register'),
-    url(r'^search/$', views.search, name='search'),
+    url(r'^search_tags/$', views.search_tags, name='search_tags'),
+    url(r'^search_users/$', views.search_users, name='search_users'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
