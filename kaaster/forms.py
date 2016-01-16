@@ -7,3 +7,6 @@ class UserLoginForm(Form):
 class CreatePostForm(Form):
     message = CharField(widget=Textarea(attrs={'rows': 20, 'cols': 50, 'placeholder': 'Your post'}), label='')
     link = CharField(max_length=100)
+
+class UserPostForm(Form):
+    text = CharField(widget=Textarea(attrs={'cols': 100, 'rows': 5}), label='')

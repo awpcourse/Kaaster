@@ -12,7 +12,7 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 
 # Forms
-from kaaster.forms import UserLoginForm, CreatePostForm
+from kaaster.forms import UserLoginForm, CreatePostForm, UserPostForm
 
 # Mixins
 class LoginRequiredMixin(object):
@@ -28,6 +28,16 @@ def index(request):
         print "Logged In"
         context["user"] = request.user
         context["loggedin"] = True
+
+        if request.method == 'GET':
+            posts = Post.objects.all()
+            form = UserPostForm()
+            context = {
+                'posts': posts,
+                'form': form,
+            }
+            return render(request, 'index.html', context)
+
     else:
         print "Not logged in!"
     return render(request, 'index.html', context)
