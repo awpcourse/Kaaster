@@ -28,7 +28,7 @@ class UserProfile(models.Model):
     birthday = models.DateField()
     gender = models.CharField(max_length=1, 
         choices=(('M', 'Male'), ('F', 'Female')), default='M')
-    avatar = models.ImageField(upload_to='avatars/',
+    avatar = models.ImageField(upload_to='images/avatars/',
         default='images/avatars/no_avatar.jpg')
 
     def __unicode__(self):
