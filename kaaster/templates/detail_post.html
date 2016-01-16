@@ -1,23 +1,30 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h3>Detail Post</h3>
   <div class="kaa-post-detail">
   	<div class="message">
 		{{ object.message }}
   	</div>
   	
-  	<div class="media">
-		{{ object.media }}
-  	</div>
+	{% if object.media %}
+		<div class="media">
+			<img src={{ object.media.url }} />
+		</div>
+	{% endif %}
   	
   	<br>
   	<div class="details">
+  		<div>
+  		{% if user == object.author %}
+			<a href="{% url 'edit_post' object.pk %}">Edit Post</a>
+		{% endif %}
+		</div>
 		<div class="date">{{ object.date_added }}</div>
 		<a href="{% url 'user_profile' object.author.username %}"><div class="author">{{ object.author }}</div></a>
   	</div>
 
 	{% if user.is_authenticated %}	
+		
 		<div class="add-reply">
 			<form method="post">
 				{% csrf_token %}

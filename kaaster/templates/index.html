@@ -10,33 +10,36 @@
     <div class="ka-posts-list">
       {% for post in posts %}
         
-          <div class="post">
-            <div class="author">
-              <div class="avatar" style="background-image: url({{ profile.avatar.url }})"></div>
-            </div>
-
-            <div class="content">
-              <div class="userplate">
-                <span class="name">
-                  {{ post.author.profile.first_name }} {{ post.author.profile.last_name }}
-                </span>
-                <span class="username">
-                  <a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a>
-                </span>
+          
+            <div class="post">
+              <div class="author">
+                <div class="avatar" style="background-image: url({{ post.author.profile.avatar.url }})"></div>
               </div>
-              {{ post.message }}
-              <div class="media">
-                {% if post.media %}
-                <img src={{ post.media.url }}/>
-                {% endif %}
-              </div>
-            </div>
 
-            <div class="details">
-              <a href="{% url 'detail_post' post.pk %}"><p class="date">{{ post.date_added }}</p></a>
+              <div class="content">
+                <div class="userplate">
+                  <span class="name">
+                    {{ post.author.profile.first_name }} {{ post.author.profile.last_name }}
+                  </span>
+                  <span class="username">
+                    <a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a>
+                  </span>
+                </div>
+                <a href="{% url 'detail_post' post.pk %}">
+                  {{ post.message }}
+                  {% if post.media %}
+                    <div class="media" style="background-image: url({{ post.media.url }})"></div>
+                  {% endif %}
+                </a>
+              </div>
+              
+              <a href="{% url 'detail_post' post.pk %}">
+                <div class="details">
+                  <p class="date">{{ post.date_added }}</p>
+                </div>
+              </a>
+
             </div>
-          </div>
-        
       {% endfor %}
     </div>
     {% endif %}

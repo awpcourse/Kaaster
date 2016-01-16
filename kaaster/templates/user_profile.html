@@ -3,7 +3,7 @@
 {% block content%}
 
   <h2> {{ profile.user.username }}'s Profile </h2>
-  <div>
+  <div class="profile">
     <div class="media">
       <img src={{ profile.avatar.url | default:"" }} />
     </div>
