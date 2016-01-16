@@ -23,17 +23,13 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='profile'
         )
-    first_name = models.TextField(max_length=500)
-    last_name = models.TextField(max_length=500)
-    birthday = models.DateField()
+    first_name = models.TextField(max_length=500, null=True)
+    last_name = models.TextField(max_length=500, null=True)
+    birthday = models.DateField(null=True)
     gender = models.CharField(max_length=1, 
-        choices=(('M', 'Male'), ('F', 'Female')), default='M')
+        choices=(('M', 'Male'), ('F', 'Female')), null=True)
     avatar = models.ImageField(upload_to='images/avatars/',
-        default='images/avatars/no_avatar.jpg')
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-date_added']
+        default='images/avatars/no_avatar.jpg', null=True)
 
     def __unicode__(self):
         return u'{} @ {}'.format(self.first_name, self.last_name)
