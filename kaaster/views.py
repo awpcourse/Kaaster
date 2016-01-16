@@ -7,10 +7,17 @@ from django.shortcuts import render, redirect
 from kaaster.forms import UserLoginForm
 
 def index(request):
-    context = {}
+    context = {"user": "", "loggedin": False}
+    print(request.user)
+    if(request.user.is_authenticated()):
+        print "Logged In"
+        context["user"] = request.user
+        context["loggedin"] = True
+    else:
+        print "Not logged in!"
     return render(request, 'index.html', context)
 
-def login(request):
+def loginview(request):
     if request.method == 'GET':
         form = UserLoginForm()
         context = {'form': form}
@@ -31,6 +38,6 @@ def login(request):
             login(request, user)
             return redirect('index')
 
-def logout(request):
+def logoutview(request):
     logout(request)
     return redirect('login')

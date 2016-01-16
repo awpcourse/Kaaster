@@ -9,6 +9,17 @@
     {% endcompress %}
   </head>
   <body>
+    <header>
+      <nav>
+        <a href="{% url 'index' %}">Hole</a>
+        <a href="#">Fellow Kaas</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">Kaa out</a>
+        {% else %}
+          <a href="{% url 'login' %}">Kaa In</a>
+        {% endif %}
+      </nav>
+    </header>
     <h1>Welcome to Kaster</h1>
     {% block header %}
     {% endblock %}
