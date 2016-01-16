@@ -18,10 +18,10 @@
             <div class="content">
               <div class="userplate">
                 <span class="name">
-                  {{ post.author }}
+                  {{ post.author.profile.first_name }} {{ post.author.profile.last_name }}
                 </span>
                 <span class="username">
-                  @{{ post.author }}
+                  <a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a>
                 </span>
               </div>
               {{ post.message }}

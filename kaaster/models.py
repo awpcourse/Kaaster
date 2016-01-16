@@ -37,12 +37,12 @@ class UserProfile(models.Model):
 
 class Tag(models.Model):
     name = models.TextField(max_length=50)
-    popularity = models.IntegerField()
+    popularity = models.IntegerField(blank=True, null=True)
 
 
 class TagsInPosts(models.Model):
-    tag = models.ForeignKey(Post, on_delete = models.CASCADE,)
-    post = models.ForeignKey(Tag, on_delete = models.CASCADE,)
+    tag = models.ForeignKey(Tag, on_delete = models.CASCADE,)
+    post = models.ForeignKey(Post, on_delete = models.CASCADE,)
 
 
 class Reply(models.Model):

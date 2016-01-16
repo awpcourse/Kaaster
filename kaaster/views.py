@@ -25,6 +25,8 @@ class LoginRequiredMixin(object):
         view = super(LoginRequiredMixin, cls).as_view(**kwargs)
         return login_required(view)
 
+# def getProfile(post):
+
 def index(request):
     context = {"user": ""}
     print(request.user)
@@ -35,6 +37,7 @@ def index(request):
 
         if request.method == 'GET':
             posts = Post.objects.all()
+            # map(getProfile, posts)
             print 'Posts received'
             print posts
             context = {
@@ -153,21 +156,18 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
-        post = self.get_object()
-        print "ID : " + post.pk
-
-        post = Post.objects.get(pk=self.get_object().pk)
+        post = Post.objects.get(pk=self.object.id)
         tags = re.findall(r'#\w+', post.message)
         for tagNameUnformated in tags:
             tagName = tagNameUnformated.replace('#', '')
-            tag = Tag.objects.get(name=tagName)
+            tag = Tag.objects.filter(name=tagName).first()
             if not tag:
-                tag = Tag(name=tagName)
+                tag = Tag.objects.create(name=tagName)
                 tag.save()
             
-            tagsinpost = TagsInPosts(tag=tag.pk, post=post)
+            tagsinpost = TagsInPosts.objects.create(tag=tag, post=post)
             tagsinpost.save()
-        #return reverse('index')
+        return reverse('index')
 
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
