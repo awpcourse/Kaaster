@@ -1,11 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content%}
-  <h3> Make yourself a Kaa! :D </h3>
-  <p class="error">{{ message }}</p>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
+	<h2 class="centered">Make yourself a Kaa! :D</h2>
+	<div class="register">
+		<p class="error">{{ message }}</p>
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Register</button>
+		</form>
+	</div>
 {% endblock%}

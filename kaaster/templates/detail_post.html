@@ -6,9 +6,11 @@
 		{{ object.message }}
   	</div>
   	
-  	<div class="media">
-		{{ object.media }}
-  	</div>
+	{% if object.media %}
+		<div class="media">
+			<img src={{ object.media.url }} />
+		</div>
+	{% endif %}
   	
   	<br>
   	<div class="details">

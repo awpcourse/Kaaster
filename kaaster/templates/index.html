@@ -27,11 +27,9 @@
                 </div>
                 <a href="{% url 'detail_post' post.pk %}">
                   {{ post.message }}
-                  <div class="media">
-                    {% if post.media %}
-                    <img src={{ post.media.url }}/>
-                    {% endif %}
-                  </div>
+                  {% if post.media %}
+                    <div class="media" style="background-image: url({{ post.media.url }})"></div>
+                  {% endif %}
                 </a>
               </div>
               
@@ -40,7 +38,7 @@
                   <p class="date">{{ post.date_added }}</p>
                 </div>
               </a>
-              
+
             </div>
       {% endfor %}
     </div>

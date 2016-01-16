@@ -152,7 +152,9 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.author = self.request.user
-        post.media = self.request.FILES['media']
+        if 'media' in self.request.FILES:
+            post.media = self.request.FILES['media']
+
         post.save()
         return super(CreatePostView, self).form_valid(form)
 
