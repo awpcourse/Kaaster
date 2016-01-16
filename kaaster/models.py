@@ -5,20 +5,16 @@ from django.conf import settings
 
 
 class Post(models.Model):
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete = models.CASCADE,
-        related_name = 'posts',
-        )
+    author = models.ForeignKey(User)
     date_added = models.DateTimeField(auto_now_add=True)
     message = models.TextField(max_length=500)
-    media = models.ImageField(upload_to='images/media')
+    media = models.ImageField(upload_to='images/media', blank=True, null=True)
 
     class Meta:
         ordering = ['-date_added']
 
     def __unicode__(self):
-        return u'{} @ {}'.format(self.author, self.date_added)
+        return u'{} @ {}'.format(self.author, self.message)
 
 
 class UserProfile(models.Model):

@@ -2,3 +2,5 @@ sandbox/*
 *.pyc
 **/**/*.pyc
 static/CACHE/**/*.css
+db.sqlite3
+*.sqlite3

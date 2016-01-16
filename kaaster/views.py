@@ -5,8 +5,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
-# FORMS
-from kaaster.forms import UserLoginForm, UserRegisterForm, CreatePostForm
 # Kaaster Models
 from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
 
@@ -14,6 +12,9 @@ from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserPro
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
+
+# Forms
+from kaaster.forms import UserLoginForm, CreatePostForm, UserPostForm, UserRegisterForm
 
 # Mixins
 class LoginRequiredMixin(object):
@@ -29,6 +30,16 @@ def index(request):
         print "Logged In"
         context["user"] = request.user
         context["loggedin"] = True
+
+        if request.method == 'GET':
+            posts = Post.objects.all()
+            form = UserPostForm()
+            context = {
+                'posts': posts,
+                'form': form,
+            }
+            return render(request, 'index.html', context)
+
     else:
         print "Not logged in!"
     return render(request, 'index.html', context)
@@ -79,7 +90,27 @@ def register(request):
 
 
 # Post Views
-# class CreatePostView(LoginRequiredMixin):
-#     model = Post
-#     form_class = CreatePostForm
-#     template_name = 'create_post.html'
+class CreatePostView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['message', 'media']
+    template_name = 'create_post.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        return super(CreatePostView, self).form_valid(form)
+
+    def get_success_url(self):
+        # return reverse('index', kwargs={'pk': self.get_object().post.pk})
+        return reverse('index')
+
+class EditPostView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['message', 'media']
+    template_name = 'edit_post.html'
+
+    def get_success_url(self):
+        # return reverse('index', kwargs={'pk': self.get_object().post.pk})
+        return reverse('index')
+
+

@@ -3,6 +3,22 @@
   <h2>Wall feed</h2>
   {% if loggedin %}
     <h3>You are a logged in user!</h3>
+
+    <h2> Kaas </h2>
+
+    {% for post in posts %}
+      <div>
+          <p> 
+              <b> {{ post.author }} </b>
+              <br>
+              <b> {{ post.date_added }} </b>
+          </p>
+          <p>
+              {{ post.message }}
+          </p>
+      </div>
+    {% endfor %}
+
   {% else %}
     <h3>You are not logged in!</h3>
   {% endif %}
