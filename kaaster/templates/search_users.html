@@ -1,8 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
-  <div>
+  <div class="ka-posts-list">
     {% for user in users %}
-      <a href="{% url 'user_profile' user.username %}">@{{ user.username }}</a>
+      <div class="post">
+        <div class="author">
+          <div class="avatar" style="background-image: url({{ user.profile.avatar.url }})"></div>
+        </div>
+
+        <div class="content">
+          <div class="userplate">
+            <span class="name">
+              {{ user.profile.first_name }} {{ user.profile.last_name }}
+            </span>
+            <span class="username">
+              <a href="{% url 'user_profile' user.username %}">@{{ user.username }}</a>
+            </span>
+          </div>
+        </div>
+      </div>
     {% endfor %}
   </div>
 {% endblock %}
