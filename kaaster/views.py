@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+import re
 
 # Kaaster Models
 from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
@@ -100,7 +101,21 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
-        return reverse('index')
+        post = self.get_object()
+        print "ID : " + post.pk
+
+        post = Post.objects.get(pk=self.get_object().pk)
+        tags = re.findall(r'#\w+', post.message)
+        for tagNameUnformated in tags:
+            tagName = tagNameUnformated.replace('#', '')
+            tag = Tag.objects.get(name=tagName)
+            if not tag:
+                tag = Tag(name=tagName)
+                tag.save()
+            
+            tagsinpost = TagsInPosts(tag=tag.pk, post=post)
+            tagsinpost.save()
+        #return reverse('index')
 
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
