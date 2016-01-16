@@ -24,5 +24,9 @@ urlpatterns = [
 	url(r'^login/$', views.loginview, name='login'),
 	url(r'^logout/$', views.logoutview, name='logout'),
     url(r'^post/create/$', views.CreatePostView.as_view(), name='create_post'),
+<<<<<<< Updated upstream
     url(r'^post/edit/(?P<pk>\d+)/$', views.EditPostView.as_view(), name='edit_post'),
+=======
+    url(r'^profile/$', views.UserProfileView.as_view(), name='profile'),
+>>>>>>> Stashed changes
 ]
