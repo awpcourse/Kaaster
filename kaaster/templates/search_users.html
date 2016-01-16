@@ -9,9 +9,24 @@
 
         <div class="content">
           <div class="userplate">
-            <span class="name">
-              {{ user.profile.first_name }} {{ user.profile.last_name }}
-            </span>
+            {% if user.profile.first_name and user.profile.last_name %}
+              <span class="name">
+                {{ user.profile.first_name }} {{ user.profile.last_name }}
+              </span>
+              {% else %}
+                {% if user.profile.first_name %}
+                  <span class="name">
+                    {{ user.profile.first_name }}
+                  </span>
+                {% else %}
+                  {% if user.profile.last_name %}
+                    <span class="name">
+                      {{ user.profile.last_name }}
+                    </span>
+                  {% endif %}
+                {% endif %}
+            {% endif %}
+
             <span class="username">
               <a href="{% url 'user_profile' user.username %}">@{{ user.username }}</a>
             </span>
