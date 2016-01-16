@@ -59,7 +59,18 @@ def logoutview(request):
 
 
 # Post Views
-# class CreatePostView(LoginRequiredMixin):
-#     model = Post
-#     form_class = CreatePostForm
-#     template_name = 'create_post.html'
+class CreatePostView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['message', 'media']
+    template_name = 'create_post.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        return super(CreatePostView, self).form_valid(form)
+
+    def get_success_url(self):
+        # return reverse('index', kwargs={'pk': self.get_object().post.pk})
+        return reverse('index')
+
+
