@@ -1,4 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
   <h2>Wall feed</h2>
+  {% if loggedin %}
+    <h3>You are a logged in user!</h3>
+  {% else %}
+    <h3>You are not logged in!</h3>
+  {% endif %}
 {% endblock %}
