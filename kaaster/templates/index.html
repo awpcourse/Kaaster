@@ -25,7 +25,14 @@
                     <a href="{% url 'user_profile' post.author.username %}">@{{ post.author }}</a>
                   </span>
                 </div>
-                <a href="{% url 'detail_post' post.pk %}">{{ post.message }}</a>
+                <a href="{% url 'detail_post' post.pk %}">
+                  {{ post.message }}
+                  <div class="media">
+                    {% if post.media %}
+                    <img src={{ post.media.url }}/>
+                    {% endif %}
+                  </div>
+                </a>
               </div>
               
               <a href="{% url 'detail_post' post.pk %}">
@@ -33,9 +40,8 @@
                   <p class="date">{{ post.date_added }}</p>
                 </div>
               </a>
+              
             </div>
-
-        
       {% endfor %}
     </div>
     {% endif %}
