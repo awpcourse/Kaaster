@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # FORMS
 from kaaster.forms import UserLoginForm, UserRegisterForm, CreatePostForm
@@ -72,10 +74,7 @@ def register(request):
             User.objects.create(username=username, password=password, email=email)
             return redirect('index')
         else:
-            context = {
-                'form': form,
-                'message': 'Something went wrong!'
-            }
+            context = {'form': form}
             return render(request, 'register.html', context)
 
 
