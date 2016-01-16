@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 # FORMS
 from kaaster.forms import UserLoginForm, UserRegisterForm, CreatePostForm
 # Kaaster Models
-from kaaster.models import Post, Tag, TagsInPost, Reply, TagsInReplies, UserProfile
+from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
 
 # Class-Based Views
 from django.views.generic.list import ListView

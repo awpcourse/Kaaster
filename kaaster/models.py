@@ -34,6 +34,7 @@ class UserProfile(models.Model):
         choices=(('M', 'Male'), ('F', 'Female')), default='M')
     avatar = models.ImageField(upload_to='images/avatars/',
         default='images/avatars/no_avatar.jpg')
+    date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-date_added']
