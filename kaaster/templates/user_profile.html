@@ -1,14 +1,21 @@
 {% extends 'layout.html' %}
 
-{% block content %}
-  <h3>Profile</h3>
-  <p class="error">{{ message }}</p>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit changes</button>
-  </form>
+{% block content%}
 
-  
-  
+  <h2> {{ profile.user.username }}'s Profile </h2>
+  <div>
+    <img src={{ profile.avatar.url }} style="max-width: 200px; max-height: 200px;"/>
+    <p> First Name: {{ profile.first_name | default:"" }} </p>
+    <p> Last Name: {{ profile.last_name | default:"" }} </p>
+    <p> Email: {{ profile.user.email | default:"" }}</p>
+    <p> Birthday: {{ profile.birthday | default:"" }} </p>
+    <p> Gender: {{ profile.gender | default:"" }} </p>
+  </div>
+    {% if user == profile.user %}
+      <h5>
+        <a href="{% url 'edit_profile' user.username %}">Edit profile</a>
+      </h5>
+    {% endif %}
+
+
 {% endblock %}

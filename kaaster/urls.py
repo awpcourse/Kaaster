@@ -17,6 +17,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from kaaster import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,8 +28,8 @@ urlpatterns = [
 	url(r'^logout/$', views.logoutview, name='logout'),
     url(r'^post/create/$', views.CreatePostView.as_view(), name='create_post'),
     url(r'^post/edit/(?P<pk>\d+)/$', views.EditPostView.as_view(), name='edit_post'),
-    #url(r'^user_profile/(?P<username>[A-Za-z]+)/$', views.user_profile, name='user_profile'),
-    #url(r'^profile/edit/(?P<username>[A-Za-z]+)/$', views.edit_profile, name='edit_profile'),
+    url(r'^user_profile/(?P<username>[A-Za-z0-9]+)/$', views.user_profile, name='user_profile'),
+    url(r'^profile/edit/(?P<username>[A-Za-z0-9]+)/$', views.edit_profile, name='edit_profile'),
     url(r'^post/(?P<pk>\d+)/$', views.DetailPostView.as_view(), name='detail_post'),
     url(r'^register/$', views.register, name='register'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
