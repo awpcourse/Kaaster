@@ -25,8 +25,8 @@ urlpatterns = [
 	url(r'^logout/$', views.logoutview, name='logout'),
     url(r'^post/create/$', views.CreatePostView.as_view(), name='create_post'),
     url(r'^post/edit/(?P<pk>\d+)/$', views.EditPostView.as_view(), name='edit_post'),
-    url(r'^user_profile/(?P<username>[A-Za-z]+)/$', views.user_profile, name='user_profile'),
-    url(r'^profile/edit/(?P<username>[A-Za-z]+)/$', views.edit_profile, name='edit_profile')
+    #url(r'^user_profile/(?P<username>[A-Za-z]+)/$', views.user_profile, name='user_profile'),
+    #url(r'^profile/edit/(?P<username>[A-Za-z]+)/$', views.edit_profile, name='edit_profile'),
     url(r'^post/(?P<pk>\d+)/$', views.DetailPostView.as_view(), name='detail_post'),
     url(r'^register/$', views.register, name='register'),
 ]
