@@ -11,16 +11,17 @@
 		{{ object.media }}
   	</div>
   	
+  	<br>
   	<div class="details">
 		<div class="date">{{ object.date_added }}</div>
 		<a href="#"><div class="author">{{ object.author }}</div></a>
   	</div>
 
-	{% if user.is_authenticated %}
+	{% if user.is_authenticated %}	
 		<div class="add-reply">
 			<form method="post">
 				{% csrf_token %}
-				{{ form.as_p }}
+				{{ replyForm.as_p }}
 				<input type="submit" value="Add Reply">
 			</form>
 		</div>
@@ -30,6 +31,19 @@
 			<h4>Please login in order to reply!</h4>
 		</div>
 	{% endif %}
+
+	{% for reply in post.replies.all %}
+		<div>
+	      <p> 
+	          <b> {{ reply.author }} </b>
+	          <br>
+	          <b> {{ reply.date_added }} </b>
+	      </p>
+	      <p>
+	          {{ reply.message }}
+	      </p>
+      	</div>
+	{% endfor %}
 
   	<div class="replies">
   	</div>

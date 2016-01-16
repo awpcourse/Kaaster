@@ -16,7 +16,7 @@
           <p>
               {{ post.message }}
               <br>
-              <!-- <a href="{% url 'detail_post' %}">Replies</a> -->
+              <a href="{% url 'detail_post' post.pk %}">Replies</a>
           </p>
       </div>
     {% endfor %}

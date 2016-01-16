@@ -31,4 +31,9 @@ class CreatePostForm(Form):
 
 
 class UserPostForm(Form):
-    text = CharField(widget=Textarea(attrs={'cols': 100, 'rows': 5}), label='')
+	message = CharField(widget=Textarea(attrs={'rows': 20, 'cols': 50}), label='')
+
+
+class CreatePostReplyForm(Form):
+    message = CharField(widget=Textarea(attrs={'rows': 5, 'cols': 50, 'placeholder': 'Your comment'}), label='')
+    link = CharField(max_length=100, required=False)
