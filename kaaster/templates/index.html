@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
   <h2>Wall feed</h2>
-  {% if loggedin %}
+  {% if user.is_authenticated %}
     <h3>You are a logged in user!</h3>
 
-    <h2> Kaas </h2>
+    <h2> Check the lastest Kaas </h2>
 
     {% for post in posts %}
       <div>

@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^post/create/$', views.CreatePostView.as_view(), name='create_post'),
     url(r'^post/edit/(?P<pk>\d+)/$', views.EditPostView.as_view(), name='edit_post'),
     url(r'^post/(?P<pk>\d+)/$', views.DetailPostView.as_view(), name='detail_post'),
+    url(r'^profile/$', views.UserProfileView.as_view(), name='profile'),
+    url(r'^register/$', views.register, name='register'),
 ]
