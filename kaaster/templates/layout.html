@@ -14,7 +14,6 @@
         <a href="{% url 'index' %}">Hole</a>
         <a href="#">Fellow Kaas</a>
         {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}">Profile</a>
           <a href="{% url 'logout' %}">Kaa out</a>
         {% else %}
           <a href="{% url 'register' %}">Be a Kaa</a>

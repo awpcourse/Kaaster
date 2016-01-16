@@ -111,7 +111,26 @@ class EditPostView(LoginRequiredMixin, UpdateView):
         # return reverse('index', kwargs={'pk': self.get_object().post.pk})
         return reverse('index')
 
+class DetailPostView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = 'detail_post.html'
 
 
+# class PostDetailsView(LoginRequiredMixin, DetailView):
+#     model = UserPost
+#     template_name = 'post_details.html'
+#     form_class = UserPostCommentForm
 
+#     def get_context_data(self, **kwargs):
+#         context = super(PostDetailsView, self).get_context_data(**kwargs)
+#         context['form'] = self.form_class()
+#         return context
+
+#     def post(self, request, *args, **kwargs):
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             text = form.cleaned_data['text']
+#             user_comment = UserPostComment(text=text, author=request.user, post=self.get_object())
+#             user_comment.save()
+#         return redirect('post_details', pk=self.get_object().pk)
 
