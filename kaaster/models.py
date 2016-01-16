@@ -57,8 +57,3 @@ class Reply(models.Model):
     def __unicode__(self):
         return u'{} @ {}'.format(self.author, self.date_added)
 
-
-class TagsInReplies(models.Model):
-    reply = models.ForeignKey(Reply, on_delete=models.CASCADE,)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE,)
-

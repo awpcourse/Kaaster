@@ -7,7 +7,7 @@ from django.db import IntegrityError
 import re
 
 # Kaaster Models
-from kaaster.models import Post, Tag, TagsInPosts, Reply, TagsInReplies, UserProfile
+from kaaster.models import Post, Tag, TagsInPosts, Reply, UserProfile
 
 # Class-Based Views
 from django.views.generic.list import ListView
@@ -152,6 +152,8 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.author = self.request.user
+        post.media = self.request.FILES['media']
+        post.save()
         return super(CreatePostView, self).form_valid(form)
 
     def get_success_url(self):
@@ -164,7 +166,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
             if not tag:
                 tag = Tag.objects.create(name=tagName)
                 tag.save()
-            
+
             tagsinpost = TagsInPosts.objects.create(tag=tag, post=post)
             tagsinpost.save()
         return reverse('index')

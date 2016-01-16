@@ -25,6 +25,11 @@
                 </span>
               </div>
               {{ post.message }}
+              <div class="media">
+                {% if post.media %}
+                <img src={{ post.media.url }}/>
+                {% endif %}
+              </div>
             </div>
 
             <div class="details">
