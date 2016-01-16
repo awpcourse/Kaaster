@@ -193,14 +193,13 @@ class DetailPostView(LoginRequiredMixin, DetailView):
         context['replies'] = self.model.replies
         return context
 
-def post(self, request, *args, **kwargs):
-    form = self.formForReply(request.POST)
-    if form.is_valid():
-        message = form.cleaned_data['message']
-        user_reply = Reply(message=message, author=request.user, post=self.get_object())
-        user_reply.save()
-            
-    return redirect('detail_post', pk=self.get_object().pk)
+    def post(self, request, *args, **kwargs):
+        form = self.formForReply(request.POST)
+        if form.is_valid():
+            message = form.cleaned_data['message']
+            user_reply = Reply(message=message, author=request.user, post=self.get_object())
+            user_reply.save()    
+        return redirect('detail_post', pk=self.get_object().pk)
 
 def search_tags(request):
     tagName = request.GET.get('tags', None)
