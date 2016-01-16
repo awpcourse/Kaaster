@@ -27,7 +27,8 @@ class UserRegisterForm(Form):
 
 
 class CreatePostForm(Form):
-    message = CharField(widget=Textarea(attrs={'rows': 20, 'cols': 50, 'placeholder': 'Your post'}), label='')
+    message = CharField(widget=Textarea(attrs={'rows': 20, 'cols': 50, 'placeholder': \
+        'Your post'}), label='')
     link = CharField(max_length=100)
 
 
@@ -49,5 +50,5 @@ class EditProfileForm(Form):
 
 
 class CreatePostReplyForm(Form):
-    message = CharField(widget=Textarea(attrs={'rows': 5, 'cols': 50, 'placeholder': 'Your comment'}), label='')
-    link = CharField(max_length=100, required=False)
+    message = CharField(widget=Textarea(attrs={'rows': 5, 'cols': 50, 'placeholder': \
+        "Reply to your fellow Kaa's post..."}), label='')
