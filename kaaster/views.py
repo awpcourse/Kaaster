@@ -4,11 +4,12 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 
 # FORMS
-from kaaster.forms import UserLoginForm
+from kaaster.forms import UserLoginForm, UserRegisterForm
 
 def index(request):
     context = {}
     return render(request, 'index.html', context)
+
 
 def login(request):
     if request.method == 'GET':
@@ -31,6 +32,19 @@ def login(request):
             login(request, user)
             return redirect('index')
 
+
 def logout(request):
     logout(request)
     return redirect('login')
+
+
+def register(request):
+    if request.method == 'GET':
+        form = UserRegisterForm()
+        context = {'form': form}
+        return render(request, 'register.html', context)
+
+
+
+
+
