@@ -31,10 +31,6 @@ class CreatePostForm(Form):
     link = CharField(max_length=100)
 
 
-class UserPostForm(Form):
-    text = CharField(widget=Textarea(attrs={'cols': 100, 'rows': 5}), label='')
-
-
 class EditProfileForm(Form):
     first_name = CharField(max_length=50, required=False)
     last_name = CharField(max_length=50, required=False)
@@ -51,3 +47,7 @@ class EditProfileForm(Form):
             raise ValidationError('Email already in use!')
         return email
 
+
+class CreatePostReplyForm(Form):
+    message = CharField(widget=Textarea(attrs={'rows': 5, 'cols': 50, 'placeholder': 'Your comment'}), label='')
+    link = CharField(max_length=100, required=False)

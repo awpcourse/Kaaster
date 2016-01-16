@@ -14,8 +14,8 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 
 # Forms
-from kaaster.forms import UserLoginForm, CreatePostForm, UserPostForm, UserRegisterForm, \
-            EditProfileForm
+from kaaster.forms import UserLoginForm, CreatePostForm, UserRegisterForm, \
+            EditProfileForm, CreatePostReplyForm
 
 # Mixins
 class LoginRequiredMixin(object):
@@ -34,7 +34,7 @@ def index(request):
 
         if request.method == 'GET':
             posts = Post.objects.all()
-            print 'am luat un cacat'
+            print 'Posts received'
             print posts
             context = {
                 'posts': posts
@@ -166,23 +166,20 @@ class EditPostView(LoginRequiredMixin, UpdateView):
 class DetailPostView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detail_post.html'
+    formPentruReply = CreatePostReplyForm
 
+    def get_context_data(self, **args):
+        context = super(DetailPostView, self).get_context_data(**args)
+        context['replyForm'] = self.formPentruReply()
+        context['replies'] = self.model.replies
+        return context
 
-# class PostDetailsView(LoginRequiredMixin, DetailView):
-#     model = UserPost
-#     template_name = 'post_details.html'
-#     form_class = UserPostCommentForm
-
-#     def get_context_data(self, **kwargs):
-#         context = super(PostDetailsView, self).get_context_data(**kwargs)
-#         context['form'] = self.form_class()
-#         return context
-
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             text = form.cleaned_data['text']
-#             user_comment = UserPostComment(text=text, author=request.user, post=self.get_object())
-#             user_comment.save()
-#         return redirect('post_details', pk=self.get_object().pk)
+    def post(self, request, *args, **kwargs):
+        form = self.formPentruReply(request.POST)
+        if form.is_valid():
+            message = form.cleaned_data['message']
+            user_reply = Reply(message=message, author=request.user, post=self.get_object())
+            user_reply.save()
+            
+        return redirect('detail_post', pk=self.get_object().pk)
 
